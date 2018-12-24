@@ -4,12 +4,12 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "pow.h"
-
 #include "arith_uint256.h"
 #include "chain.h"
 #include "chainparams.h"
 #include "primitives/block.h"
 #include "uint256.h"
+#include "util.h"
 
 #include <math.h>
 
@@ -45,13 +45,13 @@ unsigned int Terminal_Velocity_RateX(const CBlockIndex* pindexLast, const CBlock
     int64_t FRrateFLR = DSrateNRM - (2 * 60);
     int64_t difficultyfactor = 0;
     int64_t AverageDivisor = 5;
-    int64_t scanheight = 6090;
+    int64_t scanheight = 6;
     int64_t scanblocks = 1;
     int64_t scantime_1 = 0;
     int64_t scantime_2 = pindexLast->GetBlockTime();
-    // Check for blocks to index | Allowing for initial chain start
-    if (pindexLast->nHeight < scanheight+2)
-        return bnTerminalVelocity.GetCompact(); // can't index prevblock
+    // Check for blocks to index | Allowing for diff reset
+    if (pindexLast->nHeight < params.nPowVRXHeight+2)
+        return bnTerminalVelocity.GetCompact(); // reset diff
     // Set prev blocks...
     const CBlockIndex* pindexPrev = pindexLast;
     // ...and deduce spacing
@@ -166,10 +166,18 @@ unsigned int GetNextWorkRequiredBTC(const CBlockIndex* pindexLast, const CBlockH
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
     // Most recent algo first
-    if (pindexLast->nHeight + 1 >= params.nPowVRXHeight) {
+    if (pindexLast->nHeight+1 >= params.nPowVRXHeight) {
+        // Print for debugging
+        if(fDebug)
+            LogPrintf("Retargeting using VRX retarget logic \n");
+
         return Terminal_Velocity_RateX(pindexLast, pblock, params);
     }
     else {
+        // Print for debugging
+        if(fDebug)
+            LogPrintf("Retargeting using BTC retarget logic \n");
+
         return GetNextWorkRequiredBTC(pindexLast, pblock, params);
     }
 }

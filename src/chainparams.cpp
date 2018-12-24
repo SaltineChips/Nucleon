@@ -152,7 +152,7 @@ public:
         consensus.nBudgetPaymentsWindowBlocks = 100;
         consensus.nSuperblockStartBlock = 300; // The block at which 12.1 goes live (end of final 12.0 budget cycle)
         //Nash TODO
-         consensus.nSuperblockStartHash = uint256S("0000000000020cb27c7ef164d21003d5d20cdca2f54dd9a9ca6d45f4d47f8aa3");
+        consensus.nSuperblockStartHash = uint256S("0000000000020cb27c7ef164d21003d5d20cdca2f54dd9a9ca6d45f4d47f8aa3");
         consensus.nSuperblockCycle = 16616; // ~(60*24*30)/2.6, actual number of blocks per month is 200700 / 12 = 16725
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
@@ -167,7 +167,8 @@ public:
         consensus.nPowTargetSpacing = 1 * 8 * 60; // Nucleon: 8 minutes
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
-        consensus.nPoWVRXHeight = 6090;
+        consensus.nPowVRXHeight = 6800;
+        consensus.nPowVelocityHeight = 6810;
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -194,7 +195,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThreshold = 3226; // 80% of 4032
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000014a00bd6"); // 320
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000001ada182dd27b5cad"); // 6717
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S(MAINNET_GENESIS_HASH); // 0
@@ -224,6 +225,7 @@ public:
         vSeeds.push_back(CDNSSeedData("neonseeds4", "149.28.241.167"));
         vSeeds.push_back(CDNSSeedData("neonseeds5", "65.30.166.214"));
         vSeeds.push_back(CDNSSeedData("neonseeds6", "67.169.210.168"));
+        vSeeds.push_back(CDNSSeedData("neonseeds7", "74.63.213.101"));
         
         // Nucleon addresses start with 'n'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,53);
@@ -258,6 +260,7 @@ public:
             (    0, uint256S(MAINNET_GENESIS_HASH))
             (    1, uint256S("0x0000034df107446b8b0e5039bf72faaf7a084937c1db9de2d84271a032667e30"))
             (  320, uint256S("0x00000029a198a53c641172d76b5e6f4eab8a6415f2842723798be418e8e670a5"))
+            (  6717, uint256S("0x0000000000000bd306dda34d857f17345cf0e5855699700461dae8ae11d6fdb5"))
         };
 
         chainTxData = ChainTxData{
@@ -302,8 +305,8 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Nucleon: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 4001; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
-        consensus.nPowDGWHeight = 4001;
+        consensus.nPowVRXHeight = 330;
+        consensus.nPowVelocityHeight = 335;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -428,8 +431,8 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Nucleon: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 4001; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
-        consensus.nPowDGWHeight = 4001;
+        consensus.nPowVRXHeight = 330;
+        consensus.nPowVelocityHeight = 335;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -556,8 +559,8 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Nucleon: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
-        consensus.nPowKGWHeight = 15200; // same as mainnet
-        consensus.nPowDGWHeight = 34140; // same as mainnet
+        consensus.nPowVRXHeight = 6330; // same as mainnet
+        consensus.nPowVelocityHeight = 6335; // same as mainnet
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
         consensus.nMinerConfirmationWindow = 144; // Faster than normal for regtest (144 instead of 2016)
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
